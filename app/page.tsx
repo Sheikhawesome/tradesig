@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { PLANS } from "@/lib/pricing";
 import { LivePrices } from "@/components/charts/LivePrices";
+import { CandlestickHero } from "@/components/three/CandlestickHero";
+import { TiltCard } from "@/components/ui/TiltCard";
 import {
   Check, X, Zap, TrendingUp, TrendingDown, Minus, Shield, BarChart2, Globe, Cpu,
   Star, Activity, ArrowRight,
@@ -8,7 +10,7 @@ import {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-surface-900 text-slate-200">
+    <div className="min-h-screen bg-surface-900 text-slate-200" data-build="3d-hero">
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between px-6 lg:px-12 bg-surface-900/80 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="flex items-center gap-2">
@@ -53,6 +55,17 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* 3D candlestick centerpiece (WebGL) */}
+      <section className="relative px-2 sm:px-6 lg:px-12 pb-8">
+        <div className="relative max-w-5xl mx-auto">
+          {/* glow behind the scene */}
+          <div className="absolute inset-0 bg-gradient-radial from-brand-500/15 via-transparent to-transparent blur-2xl" />
+          <CandlestickHero className="relative h-[320px] sm:h-[420px] lg:h-[460px] w-full" />
+          {/* fade the bottom into the page */}
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-surface-900 to-transparent pointer-events-none" />
+        </div>
+      </section>
+
       {/* Live prices strip (REAL data from CoinGecko) */}
       <section className="px-6 lg:px-12 pb-12">
         <div className="max-w-4xl mx-auto">
@@ -93,13 +106,13 @@ export default function LandingPage() {
               { icon: Shield, title: "Risk Management Built-In", desc: "Every signal includes entry, take-profit targets and stop-loss levels. Never trade without a defined risk." },
               { icon: Zap, title: "Real-Time Alerts", desc: "Get notified the moment new high-confidence signals are issued. Pro and Elite members get priority alerts." },
             ].map(f => (
-              <div key={f.title} className="rounded-xl bg-surface-800 border border-white/[0.06] p-5 hover:border-brand-700/30 transition-colors">
+              <TiltCard key={f.title} className="rounded-xl bg-surface-800 border border-white/[0.06] p-5 hover:border-brand-700/30">
                 <div className="w-10 h-10 rounded-xl bg-brand-900/50 flex items-center justify-center mb-3">
                   <f.icon className="w-5 h-5 text-brand-400" />
                 </div>
                 <h3 className="font-semibold text-white mb-1.5">{f.title}</h3>
                 <p className="text-sm text-slate-400 leading-relaxed">{f.desc}</p>
-              </div>
+              </TiltCard>
             ))}
           </div>
         </div>

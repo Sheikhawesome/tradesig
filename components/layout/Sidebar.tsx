@@ -12,7 +12,7 @@ const nav = [
   { href: "/signals", label: "Signals", icon: TrendingUp, tier: "free" },
   { href: "/chart", label: "Chart", icon: LineChart, tier: "free" },
   { href: "/portfolio", label: "Portfolio", icon: Briefcase, tier: "elite" },
-  { href: "/ai-chat", label: "AI Agent", icon: MessageSquare, tier: "elite" },
+  { href: "/ai-chat", label: "Hamilton AI", icon: MessageSquare, tier: "elite" },
 ];
 
 interface SidebarProps {

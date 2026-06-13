@@ -156,7 +156,7 @@ export default function LandingPage() {
             {[
               { name: "Marcus T.", role: "Day Trader", text: "The dual technical + fundamental approach is what sets TradeSig apart. I've stopped second-guessing my entries.", stars: 5 },
               { name: "Priya S.", role: "Swing Trader", text: "Finally, signals with actual stop-loss and target levels. The risk/reward focus has genuinely improved my consistency.", stars: 5 },
-              { name: "David K.", role: "Crypto Investor", text: "The AI chat agent on Elite is incredible. I can ask about any coin and get a full breakdown in seconds.", stars: 5 },
+              { name: "David K.", role: "Crypto Investor", text: "Hamilton, the AI analyst on Elite, is incredible. I can ask about any coin and get a full professional breakdown in seconds.", stars: 5 },
             ].map(t => (
               <div key={t.name} className="rounded-xl bg-surface-800 border border-white/[0.06] p-5">
                 <div className="flex gap-0.5 mb-3">

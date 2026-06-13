@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { AGENT_PERSONA } from "@/lib/agent";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -25,7 +26,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Upgrade to Pro or Elite for AI analysis" }, { status: 403 });
     }
 
-    const prompt = `You are a professional trading analyst with expertise in technical and fundamental analysis.
+    const prompt = `${AGENT_PERSONA}
+
 Analyze the following asset and provide a structured trading signal.
 
 Asset: ${symbol} (${assetClass})
@@ -82,7 +84,7 @@ Respond ONLY with valid JSON in this exact format:
   "targets": [<target1>, <target2>],
   "stopLoss": <number>,
   "riskReward": <number>,
-  "analysis": "<comprehensive 4-6 sentence analysis combining technical and fundamental>"
+  "analysis": "<comprehensive 4-6 sentence analysis in Hamilton's professional, measured voice, combining technical and fundamental reasoning, written in first person as Hamilton>"
 }`;
 
     const message = await client.messages.create({

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Send, Lock, Bot, User, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import type { TierName } from "@/types";
+import { AGENT, AGENT_GREETING } from "@/lib/agent";
 import Link from "next/link";
 
 const USER_TIER: TierName = "free"; // Change to "elite" to test
@@ -30,7 +31,7 @@ export default function AiChatPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! I'm your TradeSig AI agent. Ask me to analyze any stock, crypto, forex pair, or metal. I'll give you a full technical + fundamental breakdown with a specific BUY, SELL, or HOLD recommendation.",
+      content: AGENT_GREETING,
     },
   ]);
   const [input, setInput] = useState("");
@@ -82,14 +83,14 @@ export default function AiChatPage() {
   if (USER_TIER !== "elite") {
     return (
       <div className="p-4 lg:p-6 animate-fade-in">
-        <TopBar title="AI Agent" userTier={USER_TIER} />
+        <TopBar title={`${AGENT.name} · AI Agent`} userTier={USER_TIER} />
         <div className="flex items-center justify-center min-h-[60vh]">
           <Card className="max-w-md text-center p-8 space-y-4">
             <div className="w-16 h-16 rounded-2xl bg-amber-900/30 flex items-center justify-center mx-auto">
               <Lock className="w-8 h-8 text-amber-400" />
             </div>
-            <h2 className="text-xl font-bold text-white">Elite Feature</h2>
-            <p className="text-slate-400 text-sm">The AI Chat Agent is available exclusively on the Elite plan. Ask it to analyze any symbol in the world with full technical + fundamental AI analysis.</p>
+            <h2 className="text-xl font-bold text-white">Meet {AGENT.name} — Elite Feature</h2>
+            <p className="text-slate-400 text-sm">{AGENT.name}, your AI {AGENT.title}, is available exclusively on the Elite plan. Ask {AGENT.name} to analyze any symbol in the world with a full technical + fundamental briefing.</p>
             <Link href="/pricing">
               <Button className="w-full">Upgrade to Elite — $79/mo</Button>
             </Link>
@@ -101,7 +102,7 @@ export default function AiChatPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-46px)] p-4 lg:p-6 gap-4 animate-fade-in">
-      <TopBar title="AI Agent" userTier={USER_TIER} />
+      <TopBar title={`${AGENT.name} · AI Agent`} userTier={USER_TIER} />
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto space-y-3">
@@ -156,7 +157,7 @@ export default function AiChatPage() {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
-          placeholder="Ask about any stock, crypto, forex or metal..."
+          placeholder={`Ask ${AGENT.name} about any stock, crypto, forex or metal...`}
           className="flex-1 px-4 py-3 rounded-xl bg-surface-700 border border-white/[0.06] text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-500 transition-colors"
         />
         <Button onClick={() => send()} loading={loading} className="px-4">

@@ -24,8 +24,13 @@ function HeroFallback() {
 
 export function CandlestickHero({ className = "" }: { className?: string }) {
   return (
-    <div className={`relative ${className}`} aria-hidden="true">
+    <div
+      className={`relative rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-glow-violet bg-[#080c10] ${className}`}
+      aria-hidden="true"
+    >
       <CandlestickScene />
+      {/* subtle top vignette for depth */}
+      <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-b from-black/30 via-transparent to-black/40" />
     </div>
   );
 }

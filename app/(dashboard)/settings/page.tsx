@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useAuth } from "@/lib/store";
 import { PLANS } from "@/lib/pricing";
-import { User, CreditCard, Bell, Shield, Check, Crown } from "lucide-react";
+import { User, CreditCard, Bell, Shield, Check, Crown, Palette } from "lucide-react";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import Link from "next/link";
 
 export default function SettingsPage() {
@@ -92,6 +93,17 @@ export default function SettingsPage() {
               </button>
             ))}
           </div>
+        </div>
+      </Section>
+
+      {/* Appearance */}
+      <Section icon={<Palette className="w-4 h-4" />} title="Appearance">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-slate-200">Theme</p>
+            <p className="text-xs text-slate-500">Choose light or dark mode</p>
+          </div>
+          <ThemeToggle variant="switch" />
         </div>
       </Section>
 

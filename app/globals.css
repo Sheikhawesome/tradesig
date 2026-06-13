@@ -1,23 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   THEME TOKENS (space-separated RGB so Tailwind alpha works)
+   ============================================================ */
 @layer base {
-  :root {
-    --surface-900: #080c10;
-    --surface-800: #0d1117;
-    --surface-700: #141b24;
-    --surface-600: #1c2532;
-    --surface-500: #253041;
-    --brand: #20a366;
-    --brand-dim: #138351;
+  :root,
+  [data-theme="dark"] {
+    --surface-900: 8 12 16;
+    --surface-800: 13 17 23;
+    --surface-700: 20 27 36;
+    --surface-600: 28 37 50;
+    --surface-500: 37 48 65;
+    --surface-400: 47 60 80;
+
+    --slate-50: 248 250 252;
+    --slate-100: 241 245 249;
+    --slate-200: 226 232 240;
+    --slate-300: 203 213 225;
+    --slate-400: 148 163 184;
+    --slate-500: 100 116 139;
+    --slate-600: 71 85 105;
+    --slate-700: 51 65 85;
+    --slate-800: 30 41 59;
+    --slate-900: 15 23 42;
+    --slate-950: 2 6 23;
+
+    --glass-bg: 20 27 36;
+    --glass-alpha: 0.6;
+    --hairline: 255 255 255;
+    --hairline-alpha: 0.06;
   }
 
-  * {
-    box-sizing: border-box;
+  [data-theme="light"] {
+    --surface-900: 247 248 250;
+    --surface-800: 255 255 255;
+    --surface-700: 241 245 249;
+    --surface-600: 226 232 240;
+    --surface-500: 203 213 225;
+    --surface-400: 148 163 184;
+
+    /* reversed scale: dim text classes become light, primary becomes dark */
+    --slate-50: 15 23 42;
+    --slate-100: 30 41 59;
+    --slate-200: 51 65 85;
+    --slate-300: 71 85 105;
+    --slate-400: 100 116 139;
+    --slate-500: 148 163 184;
+    --slate-600: 203 213 225;
+    --slate-700: 226 232 240;
+    --slate-800: 241 245 249;
+    --slate-900: 248 250 252;
+    --slate-950: 255 255 255;
+
+    --glass-bg: 255 255 255;
+    --glass-alpha: 0.7;
+    --hairline: 15 23 42;
+    --hairline-alpha: 0.10;
   }
+
+  * { box-sizing: border-box; }
 
   html {
     scroll-behavior: smooth;
@@ -25,56 +70,109 @@
   }
 
   body {
-    background-color: var(--surface-900);
-    color: #e2e8f0;
+    background-color: rgb(var(--surface-900));
+    color: rgb(var(--slate-200));
     font-family: 'Inter', system-ui, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--surface-800);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--surface-500);
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--brand-dim);
-  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: rgb(var(--surface-800)); }
+  ::-webkit-scrollbar-thumb { background: rgb(var(--surface-500)); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #10d96a; }
 }
 
+/* ============================================================
+   LIGHT-MODE FIXES for translucent white hairlines & headings
+   ============================================================ */
+[data-theme="light"] .border-white\/\[0\.06\],
+[data-theme="light"] .border-white\/\[0\.04\],
+[data-theme="light"] .border-white\/\[0\.08\] { border-color: rgb(15 23 42 / 0.08) !important; }
+[data-theme="light"] .border-white\/10 { border-color: rgb(15 23 42 / 0.12) !important; }
+[data-theme="light"] .border-white\/20 { border-color: rgb(15 23 42 / 0.18) !important; }
+[data-theme="light"] .bg-white\/\[0\.06\] { background-color: rgb(15 23 42 / 0.04) !important; }
+/* headings using text-white become near-black in light mode */
+[data-theme="light"] .text-white { color: rgb(15 23 42); }
+/* …but keep text white on colored/branded surfaces */
+[data-theme="light"] .bg-brand-500 .text-white,
+[data-theme="light"] .bg-brand-600 .text-white,
+[data-theme="light"] [class*="from-brand"] .text-white,
+[data-theme="light"] .text-on-accent { color: #fff !important; }
+
 @layer components {
+  /* Glassmorphism (theme-aware) */
   .glass {
-    background: rgba(20, 27, 36, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgb(var(--glass-bg) / var(--glass-alpha));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgb(var(--hairline) / var(--hairline-alpha));
   }
 
-  .signal-buy {
-    border-left: 3px solid #20a366;
-    background: rgba(32, 163, 102, 0.06);
+  /* Vibrant gradient text */
+  .text-gradient {
+    background: linear-gradient(120deg, #34e89e 0%, #22d3ee 45%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .text-gradient-pink {
+    background: linear-gradient(120deg, #f472b6 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  .signal-sell {
-    border-left: 3px solid #e05252;
-    background: rgba(224, 82, 82, 0.06);
+  /* Animated gradient border chip */
+  .neon-chip {
+    position: relative;
+    background: rgb(var(--surface-800) / 0.8);
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+  .neon-chip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(120deg, #34e89e, #22d3ee, #8b5cf6, #ec4899);
+    background-size: 200% 200%;
+    animation: gradientX 6s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
-  .signal-hold {
-    border-left: 3px solid #d4a017;
-    background: rgba(212, 160, 23, 0.06);
+  /* Aurora blob background */
+  .aurora-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .aurora-bg::before,
+  .aurora-bg::after {
+    content: "";
+    position: absolute;
+    width: 50vw; height: 50vw;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: 0.5;
+    will-change: transform;
+  }
+  .aurora-bg::before {
+    top: -10%; left: -5%;
+    background: radial-gradient(circle, #10d96a, transparent 60%);
+    animation: aurora 18s ease-in-out infinite;
+  }
+  .aurora-bg::after {
+    bottom: -15%; right: -5%;
+    background: radial-gradient(circle, #8b5cf6, transparent 60%);
+    animation: aurora 22s ease-in-out infinite reverse;
   }
 
-  .tier-badge-free {
-    @apply bg-surface-600 text-slate-400 text-xs font-medium px-2 py-0.5 rounded-full;
-  }
-  .tier-badge-pro {
-    @apply bg-brand-900 text-brand-300 text-xs font-medium px-2 py-0.5 rounded-full;
-  }
-  .tier-badge-elite {
-    @apply bg-amber-900/40 text-amber-300 text-xs font-medium px-2 py-0.5 rounded-full;
-  }
+  .signal-buy { border-left: 3px solid #10d96a; background: rgba(16, 217, 106, 0.06); }
+  .signal-sell { border-left: 3px solid #ec4899; background: rgba(236, 72, 153, 0.06); }
+  .signal-hold { border-left: 3px solid #f59e0b; background: rgba(245, 158, 11, 0.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-bg::before, .aurora-bg::after, .neon-chip::before { animation: none; }
 }

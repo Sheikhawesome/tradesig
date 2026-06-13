@@ -31,9 +31,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!isAuthenticated) return null;
 
   return (
-    <div className="flex min-h-screen bg-surface-900">
+    <div className="flex min-h-screen bg-surface-900 relative">
+      {/* faint ambient glow behind the whole app */}
+      <div className="fixed inset-0 aurora-bg opacity-[0.12] pointer-events-none" />
       <Sidebar userTier={tier} />
-      <div className="flex-1 flex flex-col ml-16 lg:ml-56 min-h-screen">
+      <div className="flex-1 flex flex-col ml-16 lg:ml-56 min-h-screen relative">
         <MarketTickerBar />
         <main className="flex-1 overflow-auto">
           {children}

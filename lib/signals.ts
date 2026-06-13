@@ -176,7 +176,7 @@ export function toTradingViewSymbol(symbol: string, assetClass: AssetClass): str
 }
 
 export function getSignalColor(direction: SignalDirection): string {
-  return direction === "BUY" ? "#20a366" : direction === "SELL" ? "#e05252" : "#d4a017";
+  return direction === "BUY" ? "#10d96a" : direction === "SELL" ? "#ec4899" : "#f59e0b";
 }
 
 export function getSignalBgClass(direction: SignalDirection): string {

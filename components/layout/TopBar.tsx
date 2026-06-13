@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Bell, Search, LogOut, Settings, Crown, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useAuth } from "@/lib/store";
 import type { TierName } from "@/types";
 
@@ -51,6 +52,7 @@ export function TopBar({ title, userTier, userEmail }: TopBarProps) {
     <header className="h-14 flex items-center justify-between px-4 lg:px-6 border-b border-white/[0.06] bg-surface-800/50 backdrop-blur-sm sticky top-0 z-30">
       <h1 className="text-base font-semibold text-white truncate">{title}</h1>
       <div className="flex items-center gap-2 sm:gap-3">
+        <ThemeToggle variant="icon" />
         <button className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-200 hover:bg-surface-700 transition-colors" aria-label="Search">
           <Search className="w-4 h-4" />
         </button>

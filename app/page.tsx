@@ -3,6 +3,7 @@ import { PLANS } from "@/lib/pricing";
 import { LivePrices } from "@/components/charts/LivePrices";
 import { CandlestickHero } from "@/components/three/CandlestickHero";
 import { TiltCard } from "@/components/ui/TiltCard";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import {
   Check, X, Zap, TrendingUp, TrendingDown, Minus, Shield, BarChart2, Globe, Cpu,
   Star, Activity, ArrowRight,
@@ -10,7 +11,7 @@ import {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-surface-900 text-slate-200" data-build="3d-hero">
+    <div className="min-h-screen bg-surface-900 text-slate-200" data-build="vibrant-v2">
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between px-6 lg:px-12 bg-surface-900/80 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="flex items-center gap-2">
@@ -23,6 +24,7 @@ export default function LandingPage() {
           <a href="#features" className="text-sm text-slate-400 hover:text-white transition-colors hidden md:block">Features</a>
           <a href="#pricing" className="text-sm text-slate-400 hover:text-white transition-colors hidden sm:block">Pricing</a>
           <a href="#faq" className="text-sm text-slate-400 hover:text-white transition-colors hidden md:block">FAQ</a>
+          <ThemeToggle variant="icon" />
           <Link href="/login" className="px-4 py-2 rounded-lg bg-surface-700 text-sm font-medium text-slate-200 hover:bg-surface-600 transition-colors">Sign In</Link>
           <Link href="/register" className="px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-sm font-semibold text-white transition-colors">Get Started</Link>
         </div>
@@ -30,15 +32,15 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className="pt-28 pb-12 px-6 lg:px-12 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-radial from-brand-900/20 via-transparent to-transparent" />
+        <div className="aurora-bg opacity-60" />
         <div className="relative max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-900/40 border border-brand-700/30 text-brand-300 text-xs font-medium mb-6">
+          <div className="neon-chip inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-brand-300 text-xs font-semibold mb-6">
             <Zap className="w-3 h-3" />
             AI-Powered · Technical + Fundamental · 68-75% Win Rate
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-5">
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-[1.05] mb-5 tracking-tight">
             Trade Smarter with<br />
-            <span className="text-brand-400">AI Signal Intelligence</span>
+            <span className="text-gradient">AI Signal Intelligence</span>
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
             Real-time buy, sell & hold signals for stocks, forex, crypto and metals. Our AI analyzes both technical indicators and market fundamentals to give you high-confidence trade setups.
@@ -61,8 +63,6 @@ export default function LandingPage() {
           {/* glow behind the scene */}
           <div className="absolute inset-0 bg-gradient-radial from-brand-500/15 via-transparent to-transparent blur-2xl" />
           <CandlestickHero className="relative h-[320px] sm:h-[420px] lg:h-[460px] w-full" />
-          {/* fade the bottom into the page */}
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-surface-900 to-transparent pointer-events-none" />
         </div>
       </section>
 
@@ -95,7 +95,7 @@ export default function LandingPage() {
       {/* Features */}
       <section id="features" className="py-16 px-6 lg:px-12">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-white text-center mb-2">Why traders choose TradeSig</h2>
+          <h2 className="font-display text-3xl font-bold text-white text-center mb-2">Why traders choose TradeSig</h2>
           <p className="text-slate-400 text-center mb-10">Built for serious traders who want an edge.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
@@ -121,7 +121,7 @@ export default function LandingPage() {
       {/* Dashboard preview */}
       <section className="py-16 px-6 lg:px-12 bg-surface-800/30 border-y border-white/[0.06]">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-white text-center mb-2">See your signals at a glance</h2>
+          <h2 className="font-display text-3xl font-bold text-white text-center mb-2">See your signals at a glance</h2>
           <p className="text-slate-400 text-center mb-10">A clean dashboard built for fast decisions.</p>
 
           {/* Mock signal cards */}
@@ -142,7 +142,7 @@ export default function LandingPage() {
       {/* How it works */}
       <section className="py-16 px-6 lg:px-12">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-white text-center mb-10">How it works</h2>
+          <h2 className="font-display text-3xl font-bold text-white text-center mb-10">How it works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { step: "1", title: "AI scans the markets", desc: "Our engine continuously analyzes thousands of instruments using technical + fundamental data." },
@@ -164,7 +164,7 @@ export default function LandingPage() {
       {/* Testimonials */}
       <section className="py-16 px-6 lg:px-12 bg-surface-800/30 border-y border-white/[0.06]">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-white text-center mb-10">Loved by traders worldwide</h2>
+          <h2 className="font-display text-3xl font-bold text-white text-center mb-10">Loved by traders worldwide</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { name: "Marcus T.", role: "Day Trader", text: "The dual technical + fundamental approach is what sets TradeSig apart. I've stopped second-guessing my entries.", stars: 5 },
@@ -196,7 +196,7 @@ export default function LandingPage() {
       {/* Pricing */}
       <section id="pricing" className="py-16 px-6 lg:px-12">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold text-white text-center mb-2">Simple, Transparent Pricing</h2>
+          <h2 className="font-display text-3xl font-bold text-white text-center mb-2">Simple, Transparent Pricing</h2>
           <p className="text-slate-400 text-center mb-10">Start free. Upgrade when you're ready.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {PLANS.map(plan => (
@@ -246,7 +246,7 @@ export default function LandingPage() {
       {/* FAQ */}
       <section id="faq" className="py-16 px-6 lg:px-12 bg-surface-800/30 border-t border-white/[0.06]">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-white text-center mb-10">Frequently Asked Questions</h2>
+          <h2 className="font-display text-3xl font-bold text-white text-center mb-10">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {[
               { q: "How are the signals generated?", a: "Each signal is produced by our AI engine that combines technical analysis (RSI, MACD, EMA crossovers, Bollinger Bands, volume) with fundamental analysis (earnings, economic data, news sentiment, on-chain metrics). A signal is only issued when both align and confidence exceeds 65%." },

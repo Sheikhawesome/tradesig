@@ -1,0 +1,80 @@
+import type { PricingPlan } from "@/types";
+
+export const PLANS: PricingPlan[] = [
+  {
+    id: "free",
+    name: "Freemium",
+    price: 0,
+    description: "Get a taste of AI-powered signals",
+    signalsPerDay: 3,
+    features: [
+      "3 signals per day",
+      "Stocks & Crypto only",
+      "Daily timeframe only",
+      "Basic technical summary",
+      "TradingView chart embed",
+      "Community access",
+    ],
+    limitations: [
+      "No fundamental analysis",
+      "No entry/target/stop levels",
+      "No AI chat",
+      "No forex or metals",
+      "Delayed signals (4h delay)",
+    ],
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    price: 29,
+    priceId: process.env.STRIPE_PRO_PRICE_ID,
+    description: "Everything you need to trade with confidence",
+    signalsPerDay: 20,
+    highlighted: true,
+    features: [
+      "20 signals per day",
+      "All asset classes (stocks, forex, crypto, metals)",
+      "All timeframes (1m to 1w)",
+      "Full technical + fundamental analysis",
+      "Entry, target & stop-loss levels",
+      "Risk/reward ratio",
+      "Historical win rate per setup",
+      "Real-time signal alerts",
+      "TradingView chart with indicators",
+      "AI signal summary",
+    ],
+    limitations: [
+      "No AI chat agent",
+      "No portfolio tracking",
+      "No custom screener",
+    ],
+  },
+  {
+    id: "elite",
+    name: "Elite",
+    price: 79,
+    priceId: process.env.STRIPE_ELITE_PRICE_ID,
+    description: "Full access — for serious traders",
+    signalsPerDay: "unlimited",
+    features: [
+      "Unlimited signals",
+      "All asset classes & timeframes",
+      "AI Chat Agent (ask anything about any symbol)",
+      "Deep fundamental analysis (earnings, macro, news)",
+      "Portfolio tracker & P&L",
+      "Custom screener — build your own filters",
+      "Priority real-time alerts (SMS + email)",
+      "Backtested strategy data",
+      "Highest-confidence setups first",
+      "Early access to new features",
+      "Priority support",
+    ],
+    limitations: [],
+  },
+];
+
+export const TIER_LIMITS = {
+  free: { signalsPerDay: 3, assetClasses: ["stocks", "crypto"], timeframes: ["1d"], delay: 240 },
+  pro: { signalsPerDay: 20, assetClasses: ["stocks", "crypto", "forex", "metals"], timeframes: ["1m","5m","15m","1h","4h","1d","1w"], delay: 0 },
+  elite: { signalsPerDay: Infinity, assetClasses: ["stocks", "crypto", "forex", "metals"], timeframes: ["1m","5m","15m","1h","4h","1d","1w"], delay: 0 },
+};

@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/Button";
 import { Check, X, Zap } from "lucide-react";
 import Link from "next/link";
 
-const USER_TIER = "free";
-
 export default function PricingPage() {
   const [loading, setLoading] = useState<string | null>(null);
 
@@ -79,7 +77,7 @@ export default function PricingPage() {
               </ul>
 
               {plan.price === 0 ? (
-                <Link href="/dashboard">
+                <Link href="/register">
                   <Button variant="secondary" className="w-full">Start Free</Button>
                 </Link>
               ) : (

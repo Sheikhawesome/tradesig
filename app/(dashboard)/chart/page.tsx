@@ -4,9 +4,7 @@ import { TopBar } from "@/components/layout/TopBar";
 import { TradingViewChart } from "@/components/charts/TradingViewChart";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import type { TierName } from "@/types";
-
-const USER_TIER: TierName = "free";
+import { useAuth } from "@/lib/store";
 
 const POPULAR_SYMBOLS = [
   { label: "AAPL", value: "NASDAQ:AAPL" },
@@ -31,6 +29,7 @@ const TIMEFRAMES = [
 ];
 
 export default function ChartPage() {
+  const tier = useAuth(s => s.tier);
   const [symbol, setSymbol] = useState("NASDAQ:AAPL");
   const [interval, setInterval] = useState("D");
   const [customSymbol, setCustomSymbol] = useState("");
@@ -45,7 +44,7 @@ export default function ChartPage() {
 
   return (
     <div className="p-4 lg:p-6 space-y-4 animate-fade-in">
-      <TopBar title="Chart" userTier={USER_TIER} />
+      <TopBar title="Chart" userTier={tier} />
 
       {/* Controls */}
       <div className="flex flex-col sm:flex-row gap-3">

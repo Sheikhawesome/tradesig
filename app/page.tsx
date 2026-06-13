@@ -21,8 +21,8 @@ export default function LandingPage() {
           <a href="#features" className="text-sm text-slate-400 hover:text-white transition-colors hidden md:block">Features</a>
           <a href="#pricing" className="text-sm text-slate-400 hover:text-white transition-colors hidden sm:block">Pricing</a>
           <a href="#faq" className="text-sm text-slate-400 hover:text-white transition-colors hidden md:block">FAQ</a>
-          <Link href="/dashboard" className="px-4 py-2 rounded-lg bg-surface-700 text-sm font-medium text-slate-200 hover:bg-surface-600 transition-colors">Demo</Link>
-          <Link href="/dashboard" className="px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-sm font-semibold text-white transition-colors">Get Started</Link>
+          <Link href="/login" className="px-4 py-2 rounded-lg bg-surface-700 text-sm font-medium text-slate-200 hover:bg-surface-600 transition-colors">Sign In</Link>
+          <Link href="/register" className="px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-sm font-semibold text-white transition-colors">Get Started</Link>
         </div>
       </nav>
 
@@ -42,7 +42,7 @@ export default function LandingPage() {
             Real-time buy, sell & hold signals for stocks, forex, crypto and metals. Our AI analyzes both technical indicators and market fundamentals to give you high-confidence trade setups.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/dashboard" className="px-8 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 font-bold text-white text-base transition-all shadow-xl shadow-brand-900/40 flex items-center justify-center gap-2">
+            <Link href="/register" className="px-8 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 font-bold text-white text-base transition-all shadow-xl shadow-brand-900/40 flex items-center justify-center gap-2">
               Start Free — No Card Required <ArrowRight className="w-4 h-4" />
             </Link>
             <Link href="#pricing" className="px-8 py-3 rounded-xl border border-white/10 hover:border-white/20 font-medium text-slate-300 text-base transition-all">
@@ -119,7 +119,7 @@ export default function LandingPage() {
           </div>
 
           <div className="text-center mt-8">
-            <Link href="/dashboard" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 font-semibold text-white transition-colors">
+            <Link href="/register" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 font-semibold text-white transition-colors">
               Try the Live Demo <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -219,7 +219,7 @@ export default function LandingPage() {
                   ))}
                 </ul>
                 <Link
-                  href={plan.price === 0 ? "/dashboard" : `/pricing`}
+                  href={plan.price === 0 ? "/register" : `/pricing`}
                   className={`w-full py-2.5 rounded-xl text-sm font-bold text-center transition-all ${plan.highlighted ? "bg-brand-500 hover:bg-brand-600 text-white" : "bg-surface-600 hover:bg-surface-500 text-slate-200"}`}
                 >
                   {plan.price === 0 ? "Start Free" : `Get ${plan.name}`}
@@ -259,7 +259,7 @@ export default function LandingPage() {
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-extrabold text-white mb-3">Ready to trade smarter?</h2>
           <p className="text-slate-400 mb-6">Join thousands of traders using AI-powered signals. Start free, no card required.</p>
-          <Link href="/dashboard" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 font-bold text-white text-base transition-all shadow-xl shadow-brand-900/40">
+          <Link href="/register" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 font-bold text-white text-base transition-all shadow-xl shadow-brand-900/40">
             Get Started Free <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

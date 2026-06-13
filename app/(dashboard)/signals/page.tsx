@@ -4,13 +4,14 @@ import { TopBar } from "@/components/layout/TopBar";
 import { SignalCard } from "@/components/signals/SignalCard";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import type { Signal, TierName, AssetClass, SignalDirection } from "@/types";
+import type { Signal, AssetClass, SignalDirection } from "@/types";
 import { RefreshCw } from "lucide-react";
+import { useAuth } from "@/lib/store";
 import Link from "next/link";
 
-const USER_TIER: TierName = "free";
-
 export default function SignalsPage() {
+  const tier = useAuth(s => s.tier);
+  const email = useAuth(s => s.email);
   const [signals, setSignals] = useState<Signal[]>([]);
   const [loading, setLoading] = useState(true);
   const [assetFilter, setAssetFilter] = useState<AssetClass | "all">("all");
@@ -19,7 +20,7 @@ export default function SignalsPage() {
 
   async function loadSignals() {
     setLoading(true);
-    const params = new URLSearchParams({ tier: USER_TIER });
+    const params = new URLSearchParams({ tier });
     if (assetFilter !== "all") params.set("assetClass", assetFilter);
     const res = await fetch(`/api/signals?${params}`);
     const data = await res.json();
@@ -29,11 +30,11 @@ export default function SignalsPage() {
     setLoading(false);
   }
 
-  useEffect(() => { loadSignals(); }, [assetFilter, dirFilter]);
+  useEffect(() => { loadSignals(); }, [assetFilter, dirFilter, tier]);
 
   return (
     <div className="p-4 lg:p-6 space-y-4 animate-fade-in">
-      <TopBar title="Signals" userTier={USER_TIER} />
+      <TopBar title="Signals" userTier={tier} userEmail={email ?? undefined} />
 
       <div className="flex flex-col sm:flex-row gap-3">
         {/* Asset filter */}
@@ -62,7 +63,7 @@ export default function SignalsPage() {
         {loading
           ? [...Array(4)].map((_, i) => <div key={i} className="h-52 rounded-xl bg-surface-700 animate-pulse" />)
           : signals.map(s => (
-              <SignalCard key={s.id} signal={s} userTier={USER_TIER} onClick={() => setSelected(s)} />
+              <SignalCard key={s.id} signal={s} userTier={tier} onClick={() => setSelected(s)} />
             ))
         }
       </div>
@@ -92,15 +93,15 @@ export default function SignalsPage() {
             </div>
             <div className="flex gap-2">
               <Button variant="secondary" size="sm" className="flex-1" onClick={() => setSelected(null)}>Close</Button>
-              <Link href="/chart" className="flex-1">
-                <Button size="sm" className="w-full">View on Chart</Button>
+              <Link href={`/signals/${selected.id}`} className="flex-1">
+                <Button size="sm" className="w-full">Full Analysis & Chart</Button>
               </Link>
             </div>
           </div>
         </div>
       )}
 
-      {USER_TIER === "free" && (
+      {tier === "free" && (
         <Card>
           <div className="text-center py-4">
             <p className="text-slate-300 text-sm mb-3">Unlock Forex & Metals signals + full entry/target/stop levels</p>

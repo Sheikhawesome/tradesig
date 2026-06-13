@@ -4,11 +4,12 @@ import { TopBar } from "@/components/layout/TopBar";
 import { SignalCard } from "@/components/signals/SignalCard";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import type { Signal, TierName, AssetClass } from "@/types";
-import { TrendingUp, TrendingDown, Minus, Zap, BarChart2, Target, Shield } from "lucide-react";
+import type { Signal, AssetClass } from "@/types";
+import { TrendingUp, TrendingDown, Minus, Zap, BarChart2 } from "lucide-react";
+import { useAuth } from "@/lib/store";
+import { LivePrices } from "@/components/charts/LivePrices";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-const USER_TIER: TierName = "free";
 
 const ASSET_FILTERS: { label: string; value: AssetClass | "all" }[] = [
   { label: "All", value: "all" },
@@ -19,19 +20,22 @@ const ASSET_FILTERS: { label: string; value: AssetClass | "all" }[] = [
 ];
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const tier = useAuth(s => s.tier);
+  const email = useAuth(s => s.email);
   const [signals, setSignals] = useState<Signal[]>([]);
   const [filter, setFilter] = useState<AssetClass | "all">("all");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const params = new URLSearchParams({ tier: USER_TIER });
+    const params = new URLSearchParams({ tier });
     if (filter !== "all") params.set("assetClass", filter);
     setLoading(true);
     fetch(`/api/signals?${params}`)
       .then(r => r.json())
       .then(d => { setSignals(d.signals ?? []); setLoading(false); })
       .catch(() => setLoading(false));
-  }, [filter]);
+  }, [filter, tier]);
 
   const stats = {
     total: signals.length,
@@ -43,7 +47,19 @@ export default function DashboardPage() {
 
   return (
     <div className="p-4 lg:p-6 space-y-6 animate-fade-in">
-      <TopBar title="Dashboard" userTier={USER_TIER} userEmail="demo@tradesig.com" />
+      <TopBar title="Dashboard" userTier={tier} userEmail={email ?? undefined} />
+
+      {/* Live crypto prices (real data) */}
+      <div>
+        <p className="text-xs text-slate-500 mb-2 flex items-center gap-1.5">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          </span>
+          Live crypto prices
+        </p>
+        <LivePrices />
+      </div>
 
       {/* Stats row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -106,12 +122,12 @@ export default function DashboardPage() {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
             {signals.map(signal => (
-              <SignalCard key={signal.id} signal={signal} userTier={USER_TIER} />
+              <SignalCard key={signal.id} signal={signal} userTier={tier} onClick={() => router.push(`/signals/${signal.id}`)} />
             ))}
           </div>
         )}
 
-        {USER_TIER === "free" && (
+        {tier === "free" && (
           <div className="mt-4 p-4 rounded-xl bg-surface-700/50 border border-brand-700/30 text-center">
             <p className="text-sm text-slate-300 mb-2">
               You're seeing <strong>3 of 20+</strong> daily signals on the free tier.

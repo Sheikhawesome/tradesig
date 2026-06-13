@@ -151,6 +151,30 @@ export async function getSignals(tier: string, assetClass?: AssetClass): Promise
   return signals.sort((a, b) => b.confidence - a.confidence);
 }
 
+export async function getSignalById(id: string): Promise<Signal | null> {
+  await new Promise(r => setTimeout(r, 200));
+  return MOCK_SIGNALS.find(s => s.id === id) ?? null;
+}
+
+// Map our display symbols to TradingView ticker format
+export function toTradingViewSymbol(symbol: string, assetClass: AssetClass): string {
+  const map: Record<string, string> = {
+    "AAPL": "NASDAQ:AAPL",
+    "NVDA": "NASDAQ:NVDA",
+    "BTC/USD": "BITSTAMP:BTCUSD",
+    "ETH/USD": "BITSTAMP:ETHUSD",
+    "EUR/USD": "FX_IDC:EURUSD",
+    "GBP/USD": "FX_IDC:GBPUSD",
+    "XAU/USD": "TVC:GOLD",
+    "XAG/USD": "TVC:SILVER",
+  };
+  if (map[symbol]) return map[symbol];
+  if (assetClass === "crypto") return `BITSTAMP:${symbol.replace("/", "")}`;
+  if (assetClass === "forex") return `FX_IDC:${symbol.replace("/", "")}`;
+  if (assetClass === "stocks") return `NASDAQ:${symbol}`;
+  return symbol;
+}
+
 export function getSignalColor(direction: SignalDirection): string {
   return direction === "BUY" ? "#20a366" : direction === "SELL" ? "#e05252" : "#d4a017";
 }

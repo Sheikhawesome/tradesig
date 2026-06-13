@@ -4,11 +4,9 @@ import { TopBar } from "@/components/layout/TopBar";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Send, Lock, Bot, User, TrendingUp, TrendingDown, Minus } from "lucide-react";
-import type { TierName } from "@/types";
 import { AGENT, AGENT_GREETING } from "@/lib/agent";
+import { useAuth } from "@/lib/store";
 import Link from "next/link";
-
-const USER_TIER: TierName = "free"; // Change to "elite" to test
 
 interface Message {
   role: "user" | "assistant";
@@ -28,6 +26,8 @@ const SUGGESTED = [
 ];
 
 export default function AiChatPage() {
+  const tier = useAuth(s => s.tier);
+  const email = useAuth(s => s.email);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -44,7 +44,7 @@ export default function AiChatPage() {
 
   async function send(text?: string) {
     const userMsg = (text ?? input).trim();
-    if (!userMsg || loading || USER_TIER !== "elite") return;
+    if (!userMsg || loading || tier !== "elite") return;
 
     setMessages(prev => [...prev, { role: "user", content: userMsg }]);
     setInput("");
@@ -60,7 +60,7 @@ export default function AiChatPage() {
       const res = await fetch("/api/ai-analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ symbol, assetClass: "stocks", timeframe: "4h", currentPrice, userTier: USER_TIER }),
+        body: JSON.stringify({ symbol, assetClass: "stocks", timeframe: "4h", currentPrice, userTier: tier }),
       });
       const data = await res.json();
 
@@ -80,10 +80,10 @@ export default function AiChatPage() {
 
   const signalIcon = { BUY: <TrendingUp className="w-4 h-4 text-emerald-400" />, SELL: <TrendingDown className="w-4 h-4 text-red-400" />, HOLD: <Minus className="w-4 h-4 text-amber-400" /> };
 
-  if (USER_TIER !== "elite") {
+  if (tier !== "elite") {
     return (
       <div className="p-4 lg:p-6 animate-fade-in">
-        <TopBar title={`${AGENT.name} · AI Agent`} userTier={USER_TIER} />
+        <TopBar title={`${AGENT.name} · AI Agent`} userTier={tier} userEmail={email ?? undefined} />
         <div className="flex items-center justify-center min-h-[60vh]">
           <Card className="max-w-md text-center p-8 space-y-4">
             <div className="w-16 h-16 rounded-2xl bg-amber-900/30 flex items-center justify-center mx-auto">
@@ -102,7 +102,7 @@ export default function AiChatPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-46px)] p-4 lg:p-6 gap-4 animate-fade-in">
-      <TopBar title={`${AGENT.name} · AI Agent`} userTier={USER_TIER} />
+      <TopBar title={`${AGENT.name} · AI Agent`} userTier={tier} userEmail={email ?? undefined} />
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto space-y-3">
